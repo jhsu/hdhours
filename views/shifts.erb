@@ -1,0 +1,16 @@
+<feed xmlns='www.w3.org/2005/Atom'
+      xmlns='http://schemas.google.com/gdata/batch'
+      xmlns:gCal='http://schemas.google.com/gCal/2005'
+      xmlns:gd='http://schemas.google.com/g/2005''
+  <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event' />
+
+<% shifts.each_index do |i| %>
+  <entry>
+    <batch:id><%= i + 1 %></batch:id>
+    <batch:operation type='insert' />
+    <content type="html"><%= shifts[i][:date] %> <%= shifts[i][:time] %> <%= shifts[i][:location] %></content>
+    <gCal:quickadd value="true" />
+  </entry>
+<% end %>
+
+</feed>
