@@ -1,2 +1,18 @@
 <h2>Helpdesk sched => gCal</h2>
-<form action="/"
+<form action="/gcal" method="post">
+  <fieldset>
+    <legend>Import Shifts to gCal</legend>
+    initials <input type="text" id="initials" name="initials" /><br />
+    gCal username <input type="text" id="guser" name="guser" />
+    gCal password <input type="password" id="gpass" name="gpass" />
+    <button type="submit">update gcal</button>
+  </fieldset>
+</form>
+
+<form action="/last_shift/clear" method="post">
+  <fieldset>
+    <legend>Reset Shifts</legend>
+    initials <input type="text" id="initials" name="initials" />
+    <button type="">reset</button>
+  </fieldset>
+</form>

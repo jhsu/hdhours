@@ -7,10 +7,11 @@ require 'googlecalendar'
 include Googlecalendar
 require 'yaml'
 
-CONFIG = YAML.load_file("#{Dir.pwd}/config.yml")
-GUSER = CONFIG['USER']
-GPASS = CONFIG['PASS']
-
+configure do
+  CONFIG = YAML.load_file("#{Dir.pwd}/config.yml")
+  GUSER = CONFIG['USER']
+  GPASS = CONFIG['PASS']
+end
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/helpdesk.sql")
 
@@ -35,7 +36,7 @@ class User
   end
 end
 
-def get_sched(initials)
+def get_sched(initials, guser, gpass)
   initials = initials.downcase
   unless user = User.first(:initials => initials) 
     user = User.create( :initials => initials, 
@@ -58,14 +59,32 @@ def get_sched(initials)
     end
   end
   
-  user.update_attributes(:last_shift => shifts.last[:date]) unless shifts.empty?
+  if (guser && gpass)
+    user.update_attributes(:last_shift => shifts.last[:date]) unless shifts.empty?
 
-  g = GData.new
-  g.login(GUSER, GPASS, source="labs.josephhsu.com")
-  shifts.each do |shift| 
-    g.quick_add("#{shift[:date].strftime('%b %d, %Y')} #{shift[:time]} Helpdesk #{shift[:location]}")
+    g = GData.new
+    g.login(guser, gpass, source="labs.josephhsu.com")
+    shifts.each do |shift| 
+      g.quick_add("#{shift[:date].strftime('%b %d, %Y')} #{shift[:time]} Helpdesk::#{initials} #{shift[:location]}")
+    end
+  else
+    false
   end
 end
 
 get '/' do
+  erb :index
+end
+
+post '/gcal' do
+  if get_sched(params[:initials], params[:guser], params[:gpass])
+    redirect '/'
+  else
+    erb "Failed"
+  end
+end
+
+post '/last_shift/clear' do
+  User.first(:initials => params[:initials]).update_attributes(:last_shift => nil)
+  redirect '/'
 end
