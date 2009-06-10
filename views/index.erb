@@ -1,5 +1,11 @@
+<html>
+<head><title></title>
+</head>
+
+<body>
+
 <h2>Helpdesk sched => gCal</h2>
-<form action="/gcal" method="post">
+<form action="/gcal" method="post" id="user_info" onsubmit"if (confirm('this form is unencrypted, are you sure you want to continue?')) {} else { return false; }">
   <fieldset>
     <legend>Import Shifts to gCal</legend>
     initials <input type="text" id="initials" name="initials" /><br />
@@ -11,8 +17,9 @@
 
 <form action="/last_shift/clear" method="post">
   <fieldset>
-    <legend>Reset Shifts</legend>
+    <legend>Reset Last Shift</legend>
     initials <input type="text" id="initials" name="initials" />
     <button type="">reset</button>
   </fieldset>
 </form>
+</body>

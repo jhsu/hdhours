@@ -5,13 +5,6 @@ require 'uri'
 require 'dm-core'
 require 'googlecalendar'
 include Googlecalendar
-require 'yaml'
-
-configure do
-  CONFIG = YAML.load_file("#{Dir.pwd}/config.yml")
-  GUSER = CONFIG['USER']
-  GPASS = CONFIG['PASS']
-end
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/helpdesk.sql")
 
@@ -24,7 +17,7 @@ class User
   property :updated_at, DateTime
 
   def slast_shift
-    if self.last_shift
+   if self.last_shift
       self.last_shift.strftime('%b %d, %Y')
     else
       nil
@@ -67,9 +60,8 @@ def get_sched(initials, guser, gpass)
     shifts.each do |shift| 
       g.quick_add("#{shift[:date].strftime('%b %d, %Y')} #{shift[:time]} Helpdesk::#{initials} #{shift[:location]}")
     end
-  else
-    false
   end
+  shifts
 end
 
 get '/' do
@@ -77,7 +69,7 @@ get '/' do
 end
 
 post '/gcal' do
-  if get_sched(params[:initials], params[:guser], params[:gpass])
+  if get_sched(params[:initials], params[:guser],  params[:gpass])
     redirect '/'
   else
     erb "Failed"
