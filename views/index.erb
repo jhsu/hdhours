@@ -1,40 +1,52 @@
-<html>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><title>HDsched to gcal</title>
+
+<style type="text/css">
+  body { margin:0; padding:0;
+          font: 62.5%/1 Cambria, Georgia, serif;}
+  #container { margin: 0 auto; width: 80%; font-size: 1.4em; }
+  fieldset {border:0;}
+  legend { margin-bottom: 10px; font-size: 2em; }
+  label, button { display: block;}
+  label { padding: 5px; width: 50%; cursor: pointer; background: #ececec; }
+  button { margin: 10px 0; }
+  input { margin-bottom: 20px; width: 35%; }
+  textarea { width: 50%;}
+
+  .notice { margin-bottom:20px; padding: 5px; background: #E5E079; text-align: center; font-size: 1.2em; color: #2F3535; }
+</style>
+
 </head>
 
 <body>
 
-<h2>Helpdesk sched => gCal</h2>
+<% if notice ||= false  %>
+<div class="notice"><%= notice %></div>
+<% end %>
 
-<form action="/gcal/manual" method="post">
+<div id="container">
+
+<form action="/" method="post">
   <fieldset>
-    <legend>Manual input</legend>
-    initials <input type="text" id="initials" name="initials" /><br />
-    gCal username <input type="text" id="guser" name="guser" />
-    gCal password <input type="password" id="gpass" name="gpass" />
-    <textarea id="sched" name="sched"></textarea>
+    <legend>Helpdesk sched =&gt; gCal</legend>
+    <label for="initials">initials</label> <input type="text" id="initials" name="initials" /><br />
+    <label for="guser">google username</label> <input type="text" id="guser" name="guser" />
+    <label for="gpass">gCal password</label> <input type="password" id="gpass" name="gpass" />
+    <p>Your google account information will not be stored.</p>
+
+    <label for="sched"><code>qc -a</code> output</label>
+    <textarea id="sched" name="sched" rows="8"></textarea>
+
     <button type="submit">update gCal</button>
   </fieldset>
 </form>
 
-<!--
-<form action="/gcal" method="post" id="user_info" onsubmit="if (confirm('this form is unencrypted, are you sure you want to continue?')) {} else { return false; }">
-  <fieldset>
-    <legend>Import Shifts to gCal</legend>
-    initials <input type="text" id="initials" name="initials" /><br />
-    gCal username <input type="text" id="guser" name="guser" />
-    gCal password <input type="password" id="gpass" name="gpass" />
-    <button type="submit">update gcal</button>
-  </fieldset>
-</form>
+<p>created by Joseph Hsu (<a href="http://twitter.com/jhsu" title="@jhsu on twitter" rel="external">@jhsu</a>)</p>
 
-<form action="/last_shift/clear" method="post">
-  <fieldset>
-    <legend>Reset Last Shift</legend>
-    initials <input type="text" id="initials" name="initials" />
-    <button type="">reset</button>
-  </fieldset>
-</form>
--->
+</div>
+
 </body>
 </html>

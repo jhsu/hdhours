@@ -76,10 +76,10 @@ get '/' do
   erb :index
 end
 
-post '/gcal/manual' do
+post '/' do
   if shifts = get_sched(params[:initials], params[:guser],  params[:gpass], params[:sched])
-    redirect '/'
+    erb :index, :locals => { :notice => "Sucessfully added shifts to gCal" }
   else
-    erb "Failed"
+    erb :index, :locals => { :notice => "Failed" }
   end
 end
