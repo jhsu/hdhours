@@ -1,11 +1,24 @@
 <html>
-<head><title></title>
+<head><title>HDsched to gcal</title>
 </head>
 
 <body>
 
 <h2>Helpdesk sched => gCal</h2>
-<form action="/gcal" method="post" id="user_info" onsubmit"if (confirm('this form is unencrypted, are you sure you want to continue?')) {} else { return false; }">
+
+<form action="/gcal/manual" method="post">
+  <fieldset>
+    <legend>Manual input</legend>
+    initials <input type="text" id="initials" name="initials" /><br />
+    gCal username <input type="text" id="guser" name="guser" />
+    gCal password <input type="password" id="gpass" name="gpass" />
+    <textarea id="sched" name="sched"></textarea>
+    <button type="submit">update gCal</button>
+  </fieldset>
+</form>
+
+<!--
+<form action="/gcal" method="post" id="user_info" onsubmit="if (confirm('this form is unencrypted, are you sure you want to continue?')) {} else { return false; }">
   <fieldset>
     <legend>Import Shifts to gCal</legend>
     initials <input type="text" id="initials" name="initials" /><br />
@@ -22,4 +35,6 @@
     <button type="">reset</button>
   </fieldset>
 </form>
+-->
 </body>
+</html>

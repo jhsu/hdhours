@@ -26,27 +26,31 @@ class User
       nil
     end
   end
-
-  def get_sched
-    `ssh jshsu@ubunix.buffalo.edu 'qc -a #{self.initials} | grep @'`
-  end
 end
 
-def get_sched(initials, guser, gpass)
+def get_sched(initials, guser, gpass, sched="")
   initials = initials.downcase
   unless user = User.first(:initials => initials) 
     user = User.create( :initials => initials, 
                         :created_at => DateTime.now, :updated_at => DateTime.now )
   end
 
-  response = user.get_sched.split(/\n/).select {|s| s =~ /[0-9]/}
+  response = sched.split(/\n/).select { |s| s =~ /^\s+[0-9]{2}|You/i }
 
   shifts = []
   response.each do |s|
-    s = s.split
-    shift = { :date => DateTime.parse(s[0] + " " + (s[2] + s[3]).gsub(/^0/,'')), 
-              :time => "#{(s[2] + s[3]).gsub(/^0/,'')}-#{(s[5] + s[6]).gsub(/^0/,'')}", 
-              :location => s.last }
+    s = s.split.select { |w| w unless w =~ /qcheck|scheduled/i }
+
+    if s.include?("now") || s.include?("today")
+      shift = { :date => DateTime.now, 
+                :time => "now - #{s[1]} #{s[2]}",
+                :location => s.last.gsub(/!+/, '') } 
+
+    else
+      shift = { :date => DateTime.parse(s[0] + " #{(s[2] + s[3]).gsub(/^0/,'')}"),
+                :time => "#{(s[2] + s[3]).gsub(/^0/,'')}-#{(s[5] + s[6]).gsub(/^0/,'')}", 
+                :location => s.last }
+    end
 
     if user.last_shift
       shifts << shift unless user.last_shift >= shift[:date]
@@ -64,6 +68,7 @@ def get_sched(initials, guser, gpass)
       g.quick_add("#{shift[:date].strftime('%b %d, %Y')} #{shift[:time]} Helpdesk::#{initials} #{shift[:location]}")
     end
   end
+
   shifts
 end
 
@@ -71,15 +76,10 @@ get '/' do
   erb :index
 end
 
-post '/gcal' do
-  if get_sched(params[:initials], params[:guser],  params[:gpass])
+post '/gcal/manual' do
+  if shifts = get_sched(params[:initials], params[:guser],  params[:gpass], params[:sched])
     redirect '/'
   else
     erb "Failed"
   end
 end
-
-# post '/last_shift/clear' do
-#   User.first(:initials => params[:initials]).update_attributes(:last_shift => nil)
-#   redirect '/'
-# end
