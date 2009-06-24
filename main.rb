@@ -3,14 +3,11 @@ require 'net/http'
 require 'uri'
 require 'dm-core'
 
-
 $:.unshift(Dir.pwd + '/lib/sinatra/lib')
-$:.unshift(Dir.pwd + '/lib/googlecalendar/googlecalendar/lib')
-
+$:.unshift(Dir.pwd + '/lib/googlecalendar/lib')
 require 'sinatra'
 require 'googlecalendar'
 include Googlecalendar
-
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/helpdesk.sql")
 
@@ -82,7 +79,7 @@ post '/gcal' do
   end
 end
 
-post '/last_shift/clear' do
-  User.first(:initials => params[:initials]).update_attributes(:last_shift => nil)
-  redirect '/'
-end
+# post '/last_shift/clear' do
+#   User.first(:initials => params[:initials]).update_attributes(:last_shift => nil)
+#   redirect '/'
+# end
