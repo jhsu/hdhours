@@ -77,9 +77,17 @@ get '/' do
 end
 
 post '/' do
-  if shifts = get_sched(params[:initials], params[:guser],  params[:gpass], params[:sched])
-    erb :index, :locals => { :notice => "Sucessfully added shifts to gCal" }
+  initials = params[:initials]
+  guser = params[:guser]
+  gpass = params[:gpass]
+  qc = params[:sched]
+  if (initials == "" || guser == "" || gpass == "" || qc == "")
+    erb :index, :locals => { :notice => "Please fill out all fields" }
   else
-    erb :index, :locals => { :notice => "Failed" }
+    if shifts = get_sched(initials, guser, gpass, qc)
+      erb :index, :locals => { :notice => "Sucessfully added shifts to gCal" }
+    else
+      erb :index, :locals => { :notice => "Failed. Please check all fields." }
+    end
   end
 end

@@ -10,7 +10,8 @@
   #container { margin: 0 auto; width: 80%; font-size: 1.4em; }
   form { padding: 20px 0; }
   fieldset {border:0;}
-  legend { margin-bottom: 10px; font-size: 2em; color: #009989; }
+  legend { margin-bottom: 10px; }
+  legend a { text-decoration: none; font-size: 2em; color: #009989; }
   label, button { display: block; letter-spacing: 1px; }
   label { padding: 5px; width: 50%; cursor: pointer; background: #A3A948; font-weight: 700; color: #fff; }
   button { margin: 10px 0; }
@@ -18,7 +19,7 @@
   input:focus, textarea:focus { background: #ECEFC2; color: #333; border: 1px solid #fff; }
   code { margin: 0 5px; font-family: "Courier New", Courier, monospace; }
 
-  .notice { margin-bottom:20px; padding: 5px; background: #EDB92E; text-align: center; font-size: 1.2em; font-weight: 700; color: #fff; }
+  .notice { margin-bottom:20px; padding: 5px; background: #EDB92E; text-align: center; font-size: 2em; letter-spacing: 1px; font-weight: 700; color: #fff; }
 </style>
 
 </head>
@@ -33,7 +34,7 @@
 
 <form action="/" method="post">
   <fieldset>
-    <legend>Helpdesk sched =&gt; gCal</legend>
+    <legend><a href="/" title="Home">Helpdesk sched =&gt; gCal</a></legend>
     <label for="initials">initials</label> <input type="text" id="initials" name="initials" /><br />
     <label for="guser">google username</label> <input type="text" id="guser" name="guser" />
     <label for="gpass">gCal password</label> <input type="password" id="gpass" name="gpass" />
