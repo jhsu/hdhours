@@ -1,0 +1,8 @@
+namespace :app do
+  desc "create config.yml, pass 'user' and 'pass' params to task"
+  task :setup do
+    user, pass = ENV['user'], ENV['pass']
+    login = {"USER" => user, "PASS" => pass}
+    File.open("config.yml", "w") { |f| f.write(login.to_yaml) }
+  end
+end
