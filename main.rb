@@ -9,7 +9,7 @@ require 'sinatra'
 require 'googlecalendar'
 include Googlecalendar
 
-DataMapper::setup(:default, "sqlite://helpdesk.db")
+DataMapper::setup(:default, "sqlite3://helpdesk.db")
 
 class User
   include DataMapper::Resource
