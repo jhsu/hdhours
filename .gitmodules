@@ -1,6 +1,0 @@
-[submodule "lib/sinatra"]
-	path = lib/sinatra
-	url = git://github.com/sinatra/sinatra.git
-[submodule "lib/googlecalendar"]
-	path = lib/googlecalendar
-	url = git://github.com/francisoud/googlecalendar.git
