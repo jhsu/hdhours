@@ -60,12 +60,12 @@ def get_sched(initials, guser, gpass, sched="")
   end
   
   if (guser && gpass)
-    user.update_attributes(:last_shift => shifts.last[:date]) unless shifts.empty?
-
     g = GData.new
-    g.login(guser, gpass, source="labs.josephhsu.com")
-    shifts.each do |shift| 
-      g.quick_add("#{shift[:date].strftime('%b %d, %Y')} #{shift[:time]} Helpdesk::#{initials} #{shift[:location]}")
+    if g.login(guser, gpass, source="labs.josephhsu.com")
+      user.update_attributes(:last_shift => shifts.last[:date]) unless shifts.empty?
+      shifts.each do |shift| 
+        g.quick_add("#{shift[:date].strftime('%b %d, %Y')} #{shift[:time]} Helpdesk::#{initials} #{shift[:location]}")
+      end
     end
   end
 
