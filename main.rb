@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'rubygems'
 require 'net/http'
 require 'uri'
 require 'dm-core'
@@ -9,7 +10,7 @@ require 'sinatra'
 require 'googlecalendar'
 include Googlecalendar
 
-DataMapper::setup(:default, "sqlite3://helpdesk.db")
+DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3://helpdesk.db")
 
 class User
   include DataMapper::Resource
