@@ -68,6 +68,8 @@
   
 <% if synced ||= false %>
     pageTracker._trackEvent('Schedule','Sync','Success');
+<% else %>
+    pageTracker._trackEvent('Schedule','Sync','Failed');
 <% end %>
 </script>
 </body>
