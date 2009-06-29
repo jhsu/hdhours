@@ -32,12 +32,12 @@
 <body>
 
 <% if notice ||= false  %>
-<div class="notice"><%= notice %></div>
+  <div class="notice"><%= notice %></div>
 <% end %>
 
 <div id="container">
 
-<form action="/" method="post">
+<form action="/" method="post" onsubmit="">
   <fieldset>
     <legend><a href="/" title="Home">Helpdesk sched =&gt; gCal</a></legend>
     <label for="initials">initials</label> <input type="text" id="initials" name="initials" /><br />
@@ -63,6 +63,12 @@
   try {
     var pageTracker = _gat._getTracker("UA-9502441-1");
     pageTracker._trackPageview();
-    } catch(err) {}</script>
+    } catch(err) {}
+  
+  
+<% if synced ||= false %>
+    pageTracker._trackEvent('Schedule','Sync','Success');
+<% end %>
+</script>
 </body>
 </html>
