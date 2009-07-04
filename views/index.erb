@@ -68,7 +68,7 @@
   
 <% if synced == :success %>
     pageTracker._trackEvent('Schedule','Sync','Success');
-<% else if synced == :failed %>
+    <% elseif synced == :failed %>
     pageTracker._trackEvent('Schedule','Sync','Failed');
 <% end %>
 </script>
