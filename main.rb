@@ -74,7 +74,7 @@ def get_sched(initials, guser, gpass, sched="")
 end
 
 get '/' do
-  erb :index
+  erb :index, :locals => { :synced => nil }
 end
 
 post '/' do
@@ -86,9 +86,9 @@ post '/' do
     erb :index, :locals => { :notice => "Please fill out all fields" }
   else
     if shifts = get_sched(initials, guser, gpass, qc)
-      erb :index, :locals => { :notice => "Sucessfully added shifts to gCal", :synced => true }
+      erb :index, :locals => { :notice => "Sucessfully added shifts to gCal", :synced => :sucess }
     else
-      erb :index, :locals => { :notice => "Failed. Please check all fields." }
+      erb :index, :locals => { :notice => "Failed. Please check all fields.", :synced => :failed }
     end
   end
 end
