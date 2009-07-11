@@ -86,7 +86,7 @@ post '/' do
     erb :index, :locals => { :notice => "Please fill out all fields" }
   else
     if shifts = get_sched(initials, guser, gpass, qc)
-      erb :index, :locals => { :notice => "Sucessfully added shifts to gCal", :synced => :sucess }
+      erb :index, :locals => { :notice => "Sucessfully added shifts to gCal", :synced => :sucess, :user => initials }
     else
       erb :index, :locals => { :notice => "Failed. Please check all fields.", :synced => :failed }
     end
